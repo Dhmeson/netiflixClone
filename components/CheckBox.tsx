@@ -22,7 +22,7 @@ export default function CheckBox({textColor,sizeImage,backgroundColor,borderColo
         <TouchableOpacity onPress={handleCheck} style={{backgroundColor:backgroundColor,borderColor:borderColor,width:sizeBox,height:sizeBox,alignContent:"center",justifyContent:"center",padding:5}}>
             {enable?<Image source={image} style={{ width:sizeImage,height:sizeImage}}></Image>:<Text></Text>}
         </TouchableOpacity>
-        <Text style={{color:textColor,marginLeft:5}}>{text}</Text>
+        <Text style={{color:textColor,marginLeft:5,fontWeight:"700"}}>{text}</Text>
     </View>
   );
 }
