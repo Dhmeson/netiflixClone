@@ -1,13 +1,26 @@
-import {  Text, View,StyleSheet,ImageBackground, Image,TouchableOpacity, TextInput, SafeAreaView } from 'react-native';
+import {  Text, View,StyleSheet,ImageBackground, Image,TouchableOpacity, TextInput, SafeAreaView, ToastAndroid } from 'react-native';
 import { Colors } from '../../Colors';
-
 import backGroundMovies from "../../assets/backMovies.jpg"
 import arrow from "../../assets/arrow.png"
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { CredentialsCtx } from '../../context/credetials';
+import { ToastMessage } from '../ToastMessage';
 
 export default function Form() { 
+  const VALIDATION_EMAIL=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
   const navigation=useNavigation()
+  const ctx =useContext(CredentialsCtx)
+  const [email,setEmail]=useState("")
+
+  function createAcount(){
+    if(VALIDATION_EMAIL.test(email)){
+      ctx.email=email
+      navigation.navigate("new-acount")
+
+    }
+    else{ ToastMessage({text:"Invalid email!"})} 
+  }
   return (
       <View style={styles.container} >
         <ImageBackground style={styles.image} source={backGroundMovies} resizeMode="cover"> 
@@ -19,7 +32,7 @@ export default function Form() {
                 <Image source={arrow} style={styles.icon} ></Image>
               </View>
 
-            <TouchableOpacity  style={styles.btn}>
+            <TouchableOpacity  style={styles.btn} onPress={()=>navigation.navigate("auth")}>
               <Text style={styles.txt}>Entrar</Text>
             </TouchableOpacity>
           </View>
@@ -29,9 +42,9 @@ export default function Form() {
             <Text style={{fontSize:16,textAlign:"center",color:Colors.white,fontWeight:"700",marginTop:10}}>Assista onde quiser. Cancele quando quiser.</Text>
             <Text style={{fontSize:18,textAlign:"center",color:Colors.white,fontWeight:"700",marginTop:10}}>Pronto para assistir? Informe seu email para criar ou reiniciar sua assinatura.</Text>
             <SafeAreaView>
-              <TextInput style={{width:300,height:35,backgroundColor:Colors.white,fontSize:15,padding:4,marginTop:20}}  placeholder="Email" keyboardType='email-address' autoCapitalize='none' />
+              <TextInput onChangeText={setEmail} style={{width:300,height:35,backgroundColor:Colors.white,fontSize:15,padding:4,marginTop:20}}  placeholder="Email" keyboardType='email-address' autoCapitalize='none' />
               <Text style={{color:"#D4D438",fontWeight:"700",marginTop:2}}>O email obrigatorio</Text>
-              <TouchableOpacity  style={{backgroundColor:Colors.red,padding:10,marginTop:10}} onPress={()=>navigation.navigate("auth")}>
+              <TouchableOpacity  style={{backgroundColor:Colors.red,padding:10,marginTop:10}} onPress={()=>createAcount()}>
               <Text style={{color:Colors.white,textAlign:"center"}}>Vamos lá</Text>
             </TouchableOpacity>
             </SafeAreaView>

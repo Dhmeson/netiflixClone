@@ -6,7 +6,7 @@ import { Colors } from '../../Colors';
 import Banner from '../../components/Banner';
 import Form from '../../components/Form';
 import SubscriptionBanner from '../../components/SubscriptionBanner';
-export default function LoginPage() { 
+export default function Home() { 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar translucent hidden={true}/>

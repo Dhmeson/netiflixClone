@@ -2,15 +2,32 @@ import {  Text, View, TextInput,TouchableOpacity ,StyleSheet,KeyboardAvoidingVie
 import { Colors } from '../../Colors';
 import CheckBox from '../../components/CheckBox';
 import checkImage from '../../assets/check.png'
-export default function AuthenticatePage() { 
+import ErrorMsg from '../../components/ErrorMsg';
+import { ValidateUser } from '../../functions/ValidateUser';
+import { useState } from 'react';
+import HelpListView from '../../components/HelpListView';
+export default function AuthenticatePage({navigation}:any) { 
+  const [email,setEmail]=useState("")
+  const [password,setPassword]=useState("")
+  const [errorMsg,setErrorMsg]=useState(true)
+  //const navigation=useNavigation()
+
+  function handleLogin(){
+    console.log(email)
+    setErrorMsg(ValidateUser({email,password}))
+  }
   return (
     <View style={styles.container}>
       <Text style={{color:Colors.red,fontSize:20,fontWeight:"700",marginTop:10}}>FAKEFLIX</Text>
       <KeyboardAvoidingView>
         <Text style={{color:Colors.white,fontSize:30,fontWeight:"700",marginTop:10,marginBottom:10}}>Entrar</Text>
-        <TextInput style={styles.input} placeholder='Email' keyboardType='email-address' autoCapitalize='none'/>
-        <TextInput style={styles.input} placeholder='Senha'/>
-        <TouchableOpacity style={styles.btn}>
+        {
+          !errorMsg ?<ErrorMsg/>:null
+        }
+        
+        <TextInput onChangeText={setEmail} value={email} style={styles.input} placeholder='Email' keyboardType='email-address' autoCapitalize='none'/>
+        <TextInput secureTextEntry onChangeText={setPassword} value={password}  style={styles.input} placeholder='Senha'/>
+        <TouchableOpacity style={styles.btn} onPress={handleLogin}>
           <Text style={{color:Colors.white,fontSize:20,fontWeight:"700",textAlign:"center"}}>Entrar</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -20,26 +37,20 @@ export default function AuthenticatePage() {
       </View>
       <View style={{flexDirection:"row",marginTop:30}}>
       <Text style={{color:Colors.gray100,fontSize:15,fontWeight:"700",textAlign:"center"}}>Novo por aqui? </Text>
-      <Text style={{color:Colors.white,fontSize:15,fontWeight:"700",textAlign:"center"}}>Assine agora </Text>
+      <TouchableOpacity onPress={()=>navigation.navigate("new-acount")}>
+        <Text style={{color:Colors.white,fontSize:15,fontWeight:"700",textAlign:"center"}}>Assine agora </Text>
+      </TouchableOpacity>
       </View>
       <Text style={{color:Colors.gray100,fontSize:14,fontWeight:"700",textAlign:"left",marginTop:20}}>
         Esta página é protegida pelo Google reCAPTCHA para garantir que você não é um robô. 
       </Text>
       <View style={{borderTopWidth:2,borderColor:Colors.gray100,marginTop:50}}>
-      <Text style={{color:Colors.gray100,fontSize:14,fontWeight:"700",textAlign:"left",marginTop:30}}>
+      <Text style={{color:Colors.gray100,fontSize:14,fontWeight:"700",textAlign:"left",marginTop:25}}>
         Dúvidas? Ligue  0800 0000 0000
       </Text>
-      <View style={{flexDirection:"row",width:"100%",marginTop:20}}>
-      <View style={{justifyContent:"space-around",minHeight:110}}>
-        <Text style={styles.txt}>Perguntas frequentes</Text>
-        <Text style={styles.txt}>Termos de Uso</Text>
-        <Text style={styles.txt}>Preferências de cookies</Text>
-      </View>
-      <View style={{justifyContent:"space-around",minHeight:110,marginLeft:40}}>
-        <Text style={styles.txt}>Central de Ajuda</Text>
-        <Text style={styles.txt}>Privacidade</Text>
-        <Text style={styles.txt}>Informações corporativas</Text>
-      </View>
+      <View style={{flexDirection:"row",width:"100%",marginTop:5,justifyContent:"space-around"}}>
+        <HelpListView text1='Perguntas frequentes' text2='Termos de Uso' text3='Preferências de cookies'/>
+        <HelpListView text1='Central de Ajuda' text2='Privacidade' text3='Informações corporativas'/>
       </View>
      
 
