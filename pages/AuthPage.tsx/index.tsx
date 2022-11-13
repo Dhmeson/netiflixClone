@@ -10,11 +10,11 @@ export default function AuthenticatePage({navigation}:any) {
   const [email,setEmail]=useState("")
   const [password,setPassword]=useState("")
   const [errorMsg,setErrorMsg]=useState(true)
-  //const navigation=useNavigation()
 
   function handleLogin(){
-    console.log(email)
-    setErrorMsg(ValidateUser({email,password}))
+    var validate=ValidateUser({email,password})
+    if(validate)navigation.navigate("movies")
+    setErrorMsg(validate)
   }
   return (
     <View style={styles.container}>

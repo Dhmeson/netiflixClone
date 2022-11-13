@@ -7,6 +7,7 @@ import AuthenticatePage from './pages/AuthPage.tsx';
 import Home from './pages/Home';
 import CreateAcountPage from './pages/CreateAcountPage.tsx';
 import ProviderCtxCredentials from './context/credetials';
+import SelectVideoPage from './pages/SelectVideoPage';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ export default function App() {
         <Stack.Screen name="home" component={Home} />
         <Stack.Screen name="auth" component={AuthenticatePage} />
         <Stack.Screen name="new-acount" component={CreateAcountPage} />
+        <Stack.Screen name="movies" component={SelectVideoPage} />
       </Stack.Navigator>
     </NavigationContainer>
     </ProviderCtxCredentials>
